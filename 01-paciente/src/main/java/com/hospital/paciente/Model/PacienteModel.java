@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
@@ -13,7 +12,7 @@ import java.time.LocalDate;
 @Table(name= "paciente")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Paciente {
+public class PacienteModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

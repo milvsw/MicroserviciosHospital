@@ -1,6 +1,6 @@
 package com.hospital.paciente.Controller;
 
-import com.hospital.paciente.Model.Paciente;
+import com.hospital.paciente.Model.PacienteModel;
 import com.hospital.paciente.Service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +17,8 @@ public class PacienteController {
     private PacienteService pacienteService;
 
     @GetMapping
-    public ResponseEntity<List<Paciente>> listar(){
-        List<Paciente> pacientes = pacienteService.findAll();
+    public ResponseEntity<List<PacienteModel>> listar(){
+        List<PacienteModel> pacientes = pacienteService.findAll();
         if(pacientes.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -27,16 +27,16 @@ public class PacienteController {
 
 
     @PostMapping
-    public ResponseEntity<Paciente> guardar(@RequestBody Paciente paciente){
-        Paciente pacientes = pacienteService.save(paciente);
+    public ResponseEntity<PacienteModel> guardar(@RequestBody PacienteModel paciente){
+        PacienteModel pacientes = pacienteService.save(paciente);
         return ResponseEntity.status(HttpStatus.CREATED).body(pacientes);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Paciente> buscar(@PathVariable Long id){
+    public ResponseEntity<PacienteModel> buscar(@PathVariable Long id){
         try{
-            Paciente paciente =  pacienteService.findById(id);
+            PacienteModel paciente =  pacienteService.findById(id);
             return ResponseEntity.ok(paciente);
         }catch(Exception e){
             return ResponseEntity.notFound().build();
@@ -44,9 +44,9 @@ public class PacienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Paciente> actualizar(@PathVariable Long id, @RequestBody Paciente paciente){
+    public ResponseEntity<PacienteModel> actualizar(@PathVariable Long id, @RequestBody PacienteModel paciente){
         try{
-            Paciente pacientes = pacienteService.findById(id);
+            PacienteModel pacientes = pacienteService.findById(id);
             pacientes.setIdPaciente(id);
             pacientes.setRutPaciente(paciente.getRutPaciente());
             pacientes.setNombrePaciente(paciente.getNombrePaciente());
