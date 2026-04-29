@@ -1,6 +1,6 @@
 package com.hospital.paciente.Service;
 
-import com.hospital.paciente.Model.Paciente;
+import com.hospital.paciente.Model.PacienteModel;
 import com.hospital.paciente.Repository.PacienteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +15,15 @@ public class PacienteService {
     @Autowired
     private PacienteRepository pacienteRepository;
 
-    public List<Paciente> findAll(){
+    public List<PacienteModel> findAll(){
         return pacienteRepository.findAll();
     }
 
-    public Paciente findById(Long idPaciente){
+    public PacienteModel findById(Long idPaciente){
         return pacienteRepository.findById(idPaciente).get();
     }
 
-    public Paciente save(Paciente paciente){
+    public PacienteModel save(PacienteModel paciente){
         return pacienteRepository.save(paciente);
     }
 

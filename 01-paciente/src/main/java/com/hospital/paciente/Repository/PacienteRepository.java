@@ -1,16 +1,16 @@
 package com.hospital.paciente.Repository;
-import com.hospital.paciente.Model.Paciente;
+import com.hospital.paciente.Model.PacienteModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-public interface PacienteRepository extends JpaRepository<Paciente,Long> {
+public interface PacienteRepository extends JpaRepository<PacienteModel,Long> {
 
     // Encuentra pacientes por nombre
-    List<Paciente> findByNombrePaciente(String nombrePaciente);
+    List<PacienteModel> findByNombrePaciente(String nombrePaciente);
 
     // Encuentra pacientes por nombre y apellido
-    List<Paciente> findByNombrePacienteAndApellidoPaciente(String nombrePaciente, String apellidoPaciente);
+    List<PacienteModel> findByNombrePacienteAndApellidoPaciente(String nombrePaciente, String apellidoPaciente);
 
     // Encuentra pacientes por correo electronico
-    Paciente findByCorreoPaciente(String correoPaciente);
+    PacienteModel findByCorreoPaciente(String correoPaciente);
 }
