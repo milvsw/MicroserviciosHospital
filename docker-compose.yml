@@ -30,5 +30,40 @@ services:
     depends_on:
       - db_mysql
 
+  # Microservicio medico
+  medico:
+    build:
+      context: ./02-medico
+      dockerfile: Dockerfile
+    container_name: 02-medico
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db_mysql:3306/db_medico
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+    depends_on:
+      - db_mysql
+
+  # Microservicio especialidades
+  especialidades:
+    build:
+      context: ./03-especialidades
+      dockerfile: Dockerfile
+    container_name: 03-especialidades
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db_mysql:3306/db_especialidades
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+    depends_on:
+      - db_mysql
+
+
 volumes:
   mysql_data:

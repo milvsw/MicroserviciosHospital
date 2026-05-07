@@ -35,7 +35,7 @@ public class EspecialidadesController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EspecialidadesModel> buscar(@PathVariable Integer id){
+    public ResponseEntity<EspecialidadesModel> buscar(@PathVariable Long id){
         try{
             EspecialidadesModel especialidad = especialidadesService.findById(id);
             return ResponseEntity.status(HttpStatus.OK).body(especialidad);
@@ -46,7 +46,7 @@ public class EspecialidadesController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EspecialidadesModel> actualizar(@PathVariable Integer id, @RequestBody EspecialidadesModel especialidadesModel){
+    public ResponseEntity<EspecialidadesModel> actualizar(@PathVariable Long id, @RequestBody EspecialidadesModel especialidadesModel){
         try{
             EspecialidadesModel especialidad = especialidadesService.findById(id);
 
@@ -64,7 +64,7 @@ public class EspecialidadesController {
     }
 
     @DeleteMapping("/{id}")
-    public  ResponseEntity<?> eliminar(@PathVariable Integer id){
+    public  ResponseEntity<?> eliminar(@PathVariable Long id){
         try{
             especialidadesService.delete(id);
             return  ResponseEntity.status(HttpStatus.OK).build();

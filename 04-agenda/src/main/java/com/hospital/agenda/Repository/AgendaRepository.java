@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface AgendaRepository extends JpaRepository<AgendaModel,Integer> {
+public interface AgendaRepository extends JpaRepository<AgendaModel,Long> {
 
     // buscar por fecha
     List<AgendaModel> findByFecha(LocalDate fecha);

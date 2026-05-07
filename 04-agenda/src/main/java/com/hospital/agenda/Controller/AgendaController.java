@@ -31,7 +31,7 @@ public class AgendaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AgendaModel> buscarPorId(@PathVariable Integer id){
+    public ResponseEntity<AgendaModel> buscarPorId(@PathVariable Long id){
         try{
             AgendaModel agenda = agendaService.findById(id);
             return ResponseEntity.status(HttpStatus.OK).body(agenda);
@@ -42,7 +42,7 @@ public class AgendaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AgendaModel> actualizar(@PathVariable Integer id, @RequestBody AgendaModel agendaModel){
+    public ResponseEntity<AgendaModel> actualizar(@PathVariable Long id, @RequestBody AgendaModel agendaModel){
         try{
             AgendaModel agenda = agendaService.findById(id);
 
@@ -65,7 +65,7 @@ public class AgendaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?>  eliminar(@PathVariable Integer id){
+    public ResponseEntity<?>  eliminar(@PathVariable Long id){
         try{
             agendaService.delete(id);
             return ResponseEntity.status(HttpStatus.OK).build();

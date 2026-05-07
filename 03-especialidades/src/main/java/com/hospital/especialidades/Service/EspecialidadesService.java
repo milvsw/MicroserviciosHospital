@@ -17,7 +17,7 @@ public class EspecialidadesService {
         return especialidadesRepository.findAll();
     }
 
-    public EspecialidadesModel findById(Integer idEspecialidad){
+    public EspecialidadesModel findById(Long idEspecialidad){
         return especialidadesRepository.findById(idEspecialidad).get();
     }
 
@@ -25,7 +25,7 @@ public class EspecialidadesService {
         return especialidadesRepository.save(especialidades);
     }
 
-    public void delete(Integer idEspecialidad){
+    public void delete(Long idEspecialidad){
         especialidadesRepository.deleteById(idEspecialidad);
     }
 }
