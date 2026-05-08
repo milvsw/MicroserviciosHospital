@@ -18,7 +18,7 @@ public class AgendaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idAgenda;
+    private Long idAgenda;
 
     @Column(name="idMedico",nullable=false)
     private Integer idMedico;

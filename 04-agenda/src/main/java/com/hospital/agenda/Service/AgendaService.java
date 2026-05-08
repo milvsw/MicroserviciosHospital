@@ -18,7 +18,7 @@ public class AgendaService {
         return agendaRepository.findAll();
     }
 
-    public AgendaModel findById(Integer idAgenda){
+    public AgendaModel findById(Long idAgenda){
         return agendaRepository.findById(idAgenda).get();
     }
 
@@ -26,7 +26,7 @@ public class AgendaService {
         return agendaRepository.save(agenda);
     }
 
-    public void delete(Integer idAgenda){
+    public void delete(Long idAgenda){
         agendaRepository.deleteById(idAgenda);
     }
 }

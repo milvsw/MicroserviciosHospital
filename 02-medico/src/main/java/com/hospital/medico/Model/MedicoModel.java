@@ -15,7 +15,8 @@ public class MedicoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idMedico;
+    @Column(name="idMedico")
+    private Long idMedico;
 
     @Column(name="rutMedico",unique=true, length=13, nullable=false)
     private String rutMedico;

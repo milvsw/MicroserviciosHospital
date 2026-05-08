@@ -4,7 +4,7 @@ import com.hospital.especialidades.Model.EspecialidadesModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-public interface EspecialidadesRepository extends JpaRepository<EspecialidadesModel,Integer> {
+public interface EspecialidadesRepository extends JpaRepository<EspecialidadesModel,Long> {
 
     // Encontrar la especiliadad por el nombreEspecialidad
 

@@ -18,7 +18,7 @@ public class MedicoService {
         return medicoRepository.findAll();
     }
 
-    public MedicoModel findById(Integer idMedico){
+    public MedicoModel findById(Long idMedico){
         return medicoRepository.findById(idMedico).get();
     }
 
@@ -26,7 +26,7 @@ public class MedicoService {
         return medicoRepository.save(medico);
     }
 
-    public void delete(Integer id){
+    public void delete(Long id){
         medicoRepository.deleteById(id);
     }
 

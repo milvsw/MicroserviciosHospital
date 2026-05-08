@@ -32,7 +32,7 @@ public class MedicoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MedicoModel> buscar(@PathVariable Integer id){
+    public ResponseEntity<MedicoModel> buscar(@PathVariable Long id){
         try{
             MedicoModel medico = medicoService.findById(id);
             return ResponseEntity.ok(medico);
@@ -43,7 +43,7 @@ public class MedicoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MedicoModel> actualizar(@PathVariable Integer id, @RequestBody MedicoModel medico){
+    public ResponseEntity<MedicoModel> actualizar(@PathVariable Long id, @RequestBody MedicoModel medico){
         try{
             MedicoModel medicos = medicoService.findById(id);
 
@@ -54,6 +54,7 @@ public class MedicoController {
             medicos.setTelefonoMedico(medicos.getTelefonoMedico());
             medicos.setCorreoMedico(medicos.getCorreoMedico());
             medicos.setAnniosExperiencia(medicos.getAnniosExperiencia());
+            medicos.setIdEspecialidad(medicos.getIdEspecialidad());
 
             medicoService.save(medicos);
             return ResponseEntity.ok(medicos);
@@ -64,7 +65,7 @@ public class MedicoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Integer id){
+    public ResponseEntity<?> eliminar(@PathVariable Long id){
         try{
             medicoService.delete(id);
             return ResponseEntity.ok().build();
