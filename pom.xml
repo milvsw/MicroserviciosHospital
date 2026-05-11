@@ -25,7 +25,7 @@
         <module>06-consultas</module>
         <module>07-pagos</module>
         <module>08-recetas</module>
-        <module>09-historialClinico</module>
+        <module>09-historialclinico</module>
         <module>10-notificaciones</module>
     </modules>
 
