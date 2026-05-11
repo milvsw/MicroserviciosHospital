@@ -43,8 +43,4 @@ public class ReservasModel {
 
     @Column(name="observacion", nullable=false)
     private String observacion;
-
-
-
-
 }

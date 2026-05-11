@@ -1,4 +1,4 @@
-package com.hospital.historialClinico;
+package com.hospital.historialclinico;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

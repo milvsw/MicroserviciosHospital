@@ -152,11 +152,11 @@ services:
   # Microservicio historial clinico
   historialClinico:
     build:
-      context: ./09-historialClinico
+      context: ./09-historialclinico
       dockerfile: Dockerfile
     container_name: 09-historialclinico
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db_mysql:3306/db_historialClinico
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db_mysql:3306/db_historialclinico
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
     deploy:
