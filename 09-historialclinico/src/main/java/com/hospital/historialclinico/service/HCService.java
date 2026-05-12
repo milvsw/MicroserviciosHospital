@@ -1,7 +1,7 @@
-package com.hospital.historialClinico.service;
+package com.hospital.historialclinico.service;
 
-import com.hospital.historialClinico.model.HCModel;
-import com.hospital.historialClinico.repository.HCRepository;
+import com.hospital.historialclinico.model.HCModel;
+import com.hospital.historialclinico.repository.HCRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

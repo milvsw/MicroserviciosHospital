@@ -1,8 +1,6 @@
 FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
-
-EXPOSE 8081
+# No copiamos el JAR aquí, dejaremos que Docker lo maneje mediante volúmenes
+EXPOSE 8080
 # Comando para ejecutar la aplicación en modo desarrollo (usando el wrapper de Maven)
-
-ENTRYPOINT ["java","-jar","app.jar"]
-#CMD ["./mvnw", "spring-boot:run"]
+CMD ["./mvnw", "spring-boot:run"]

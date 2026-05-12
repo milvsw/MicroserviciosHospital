@@ -1,7 +1,7 @@
-package com.hospital.historialClinico.controller;
+package com.hospital.historialclinico.controller;
 
-import com.hospital.historialClinico.model.HCModel;
-import com.hospital.historialClinico.service.HCService;
+import com.hospital.historialclinico.model.HCModel;
+import com.hospital.historialclinico.service.HCService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

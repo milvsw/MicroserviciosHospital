@@ -1,4 +1,4 @@
-package com.hospital.historialClinico.model;
+package com.hospital.historialclinico.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;

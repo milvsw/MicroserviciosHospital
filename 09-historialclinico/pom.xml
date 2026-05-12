@@ -11,7 +11,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>historialClinico</artifactId> <name>historialClinico</name>
+    <artifactId>historialclinico</artifactId> <name>historialclinico</name>
 
     <dependencies>
         <dependency>

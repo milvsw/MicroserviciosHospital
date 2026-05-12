@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -44,8 +43,4 @@ public class ReservasModel {
 
     @Column(name="observacion", nullable=false)
     private String observacion;
-
-
-
-
 }
