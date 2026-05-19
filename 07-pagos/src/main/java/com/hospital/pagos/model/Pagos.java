@@ -13,10 +13,9 @@ public class Pagos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "El RUT del paciente es obligatorio")
-    @Size(min = 9, max = 12)
+    @NotBlank(message = "El ID del paciente es obligatorio")
     @Column(nullable = false)
-    private String rutPaciente;
+    private Long idPaciente;
 
     @NotNull(message = "El monto no puede ser nulo")
     @Positive(message = "El monto debe ser mayor a cero")
@@ -42,13 +41,13 @@ public class Pagos {
     public Pagos() {
     }
 
-    public Pagos(Boolean activo, String estadoPago, String medioPago, LocalDateTime fechaPago, Double monto, String rutPaciente) {
+    public Pagos(Boolean activo, String estadoPago, String medioPago, LocalDateTime fechaPago, Double monto, Long idPaciente) {
         this.activo = activo;
         this.estadoPago = estadoPago;
         this.medioPago = medioPago;
         this.fechaPago = fechaPago;
         this.monto = monto;
-        this.rutPaciente = rutPaciente;
+        this.idPaciente = idPaciente;
     }
 
     public Long getId() {
@@ -99,11 +98,11 @@ public class Pagos {
         this.monto = monto;
     }
 
-    public String getRutPaciente() {
-        return rutPaciente;
+    public Long getIdPaciente() {
+        return idPaciente;
     }
 
-    public void setRutPaciente(String rutPaciente) {
-        this.rutPaciente = rutPaciente;
+    public void setIdPaciente(Long idPaciente) {
+        this.idPaciente = idPaciente;
     }
 }

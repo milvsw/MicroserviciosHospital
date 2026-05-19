@@ -32,7 +32,7 @@ public class PagosService {
         // 1. Buscamos si el pago existe en la base de datos
         return repo.findById(id).map(pagoExistente -> {
             // 2. Si existe, actualizamos cada uno de sus campos con los nuevos datos
-            pagoExistente.setRutPaciente(datosActualizados.getRutPaciente());
+            pagoExistente.setIdPaciente(datosActualizados.getIdPaciente());
             pagoExistente.setMonto(datosActualizados.getMonto());
             pagoExistente.setFechaPago(datosActualizados.getFechaPago());
             pagoExistente.setMedioPago(datosActualizados.getMedioPago());
