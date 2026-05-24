@@ -57,7 +57,7 @@ public class NotificacionesService {
         this.repo = repo;
     }
 
-    public Mono<NotificacionesDetalleDTO> obtenerAgendaConMedico(Long id) {
+    public Mono<NotificacionesDetalleDTO> obtenerNotificacionConPaciente(Long id) {
 
 
         Mono<NotificacionesModel> llamadaNotificaciones =

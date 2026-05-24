@@ -15,16 +15,31 @@ public class PacienteService {
     @Autowired
     private PacienteRepository pacienteRepository;
 
-    public List<PacienteModel> findAll(){
+    public List<PacienteModel> listarTodos(){
         return pacienteRepository.findAll();
     }
 
-    public PacienteModel findById(Long idPaciente){
+    public PacienteModel buscarPorId(Long idPaciente){
         return pacienteRepository.findById(idPaciente).get();
     }
 
-    public PacienteModel save(PacienteModel paciente){
+    public PacienteModel guardar(PacienteModel paciente){
         return pacienteRepository.save(paciente);
+    }
+
+    public PacienteModel actualizar(Long idPaciente, PacienteModel paciente){
+        PacienteModel existente = pacienteRepository.findById(idPaciente)
+                .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+
+        existente.setRutPaciente(paciente.getRutPaciente());
+        existente.setNombrePaciente(paciente.getNombrePaciente());
+        existente.setApellidoPaciente(paciente.getApellidoPaciente());
+        existente.setFechaNacimiento(paciente.getFechaNacimiento());
+        existente.setSexoPaciente(paciente.getSexoPaciente());
+        existente.setCorreoPaciente(paciente.getCorreoPaciente());
+        existente.setDireccionPaciente(paciente.getDireccionPaciente());
+
+        return pacienteRepository.save(existente);
     }
 
 

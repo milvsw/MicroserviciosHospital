@@ -22,7 +22,7 @@ public class ReservasController {
 
     @GetMapping
     public ResponseEntity<List<ReservasModel>> listar(){
-        List<ReservasModel> reservas = reservasService.findAll();
+        List<ReservasModel> reservas = reservasService.listarTodo();
         if(reservas.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -31,7 +31,7 @@ public class ReservasController {
 
     @PostMapping
     public ResponseEntity<ReservasModel> guardar(@Valid @RequestBody ReservasModel reserva){
-            ReservasModel reservas = reservasService.save(reserva);
+            ReservasModel reservas = reservasService.guardar(reserva);
             return ResponseEntity.status(HttpStatus.CREATED).body(reservas);
 
     }
@@ -39,7 +39,7 @@ public class ReservasController {
     @GetMapping("/{id}")
     public ResponseEntity<ReservasModel> buscar(@PathVariable Long id){
         try {
-            ReservasModel reserva = reservasService.findById(id);
+            ReservasModel reserva = reservasService.buscarId(id);
             return ResponseEntity.ok(reserva);
         }catch (Exception e){
             return ResponseEntity.notFound().build();
@@ -49,20 +49,8 @@ public class ReservasController {
     @PutMapping("/{id}")
     public ResponseEntity<ReservasModel> actualizar(@PathVariable Long id, @RequestBody ReservasModel reserva){
         try{
-            ReservasModel reservas = reservasService.findById(id);
-
-            reservas.setIdReservas(reserva.getIdReservas());
-            reservas.setIdPaciente(reserva.getIdPaciente());
-            reservas.setIdMedico(reserva.getIdMedico());
-            reservas.setIdAgenda(reserva.getIdAgenda());
-            reservas.setFechaAtencion(reserva.getFechaAtencion());
-            reservas.setHoraAtencion(reserva.getHoraAtencion());
-            reservas.setMotivoConsulta(reserva.getMotivoConsulta());
-            reservas.setEstado(reserva.getEstado());
-            reservas.setObservacion(reserva.getObservacion());
-
-            reservasService.save(reservas);
-            return ResponseEntity.ok(reserva);
+            ReservasModel actualizado = reservasService.actualizar(id, reserva);
+            return ResponseEntity.ok(actualizado);
 
         }catch (Exception e){
             return ResponseEntity.notFound().build();
@@ -72,7 +60,7 @@ public class ReservasController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id){
         try{
-            reservasService.delete(id);
+            reservasService.eliminar(id);
             return ResponseEntity.ok().build();
         }catch (Exception e){
             return ResponseEntity.notFound().build();

@@ -20,7 +20,7 @@ public class AgendaController {
 
     @GetMapping
     public ResponseEntity<List<AgendaModel>> listar(){
-        List<AgendaModel> agenda =  agendaService.findAll();
+        List<AgendaModel> agenda =  agendaService.listarTodo();
         if(agenda.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -29,14 +29,14 @@ public class AgendaController {
 
     @PostMapping
     public ResponseEntity<AgendaModel> guardar(@Valid @RequestBody AgendaModel agendaModel){
-        AgendaModel agenda = agendaService.save(agendaModel);
+        AgendaModel agenda = agendaService.guardar(agendaModel);
         return ResponseEntity.status(HttpStatus.OK).body(agenda);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AgendaModel> buscarPorId(@PathVariable Long id){
         try{
-            AgendaModel agenda = agendaService.findById(id);
+            AgendaModel agenda = agendaService.buscarId(id);
             return ResponseEntity.status(HttpStatus.OK).body(agenda);
 
         }catch(Exception ex){
@@ -45,21 +45,9 @@ public class AgendaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AgendaModel> actualizar(@PathVariable Long id, @RequestBody AgendaModel agendaModel){
+    public ResponseEntity<AgendaModel> actualizar(@PathVariable Long id,@Valid @RequestBody AgendaModel agendaModel){
         try{
-            AgendaModel agenda = agendaService.findById(id);
-
-            agenda.setIdAgenda(id);
-            agenda.setIdMedico(agendaModel.getIdMedico());
-            agenda.setFecha(agendaModel.getFecha());
-            agenda.setHoraInicio(agendaModel.getHoraInicio());
-            agenda.setHoraFin(agendaModel.getHoraFin());
-            agenda.setDuracionMinutos(agendaModel.getDuracionMinutos());
-            agenda.setCuposDisponibles(agendaModel.getCuposDisponibles());
-            agenda.setEstado(agendaModel.getEstado());
-            agenda.setActivo(agendaModel.isActivo());
-
-            agendaService.save(agenda);
+            AgendaModel agenda = agendaService.actualizar(id, agendaModel);
             return ResponseEntity.status(HttpStatus.OK).body(agenda);
 
         }catch(Exception ex){

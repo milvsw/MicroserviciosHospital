@@ -19,18 +19,33 @@ public class AgendaService {
     @Autowired
     private AgendaRepository agendaRepository;
 
-    public List<AgendaModel> findAll(){
+    public List<AgendaModel> listarTodo(){
         return agendaRepository.findAll();
     }
 
-    public AgendaModel findById(Long idAgenda){
+    public AgendaModel buscarId(Long idAgenda){
         return agendaRepository.findById(idAgenda).get();
     }
 
-    public AgendaModel save(AgendaModel agenda){
+    public AgendaModel guardar(AgendaModel agenda){
         return agendaRepository.save(agenda);
     }
 
+    public AgendaModel actualizar(Long id, AgendaModel agenda){
+        AgendaModel existente = agendaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Agenda no encontrada"));
+
+        existente.setIdMedico(agenda.getIdMedico());
+        existente.setFecha(agenda.getFecha());
+        existente.setHoraInicio(agenda.getHoraInicio());
+        existente.setHoraFin(agenda.getHoraFin());
+        existente.setDuracionMinutos(agenda.getDuracionMinutos());
+        existente.setCuposDisponibles(agenda.getCuposDisponibles());
+        existente.setEstado(agenda.getEstado());
+        existente.setActivo(agenda.isActivo());
+
+        return  agendaRepository.save(existente);
+    }
     public void delete(Long idAgenda){
         agendaRepository.deleteById(idAgenda);
     }

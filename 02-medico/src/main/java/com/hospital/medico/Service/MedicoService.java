@@ -21,18 +21,34 @@ public class MedicoService {
     @Autowired
     private MedicoRepository medicoRepository;
 
-    public List<MedicoModel> findAll(){
+    public List<MedicoModel> listarTodo(){
         return medicoRepository.findAll();
     }
 
-    public MedicoModel findById(Long idMedico){
-        return medicoRepository.findById(idMedico).get();
+    public MedicoModel buscarId(Long idMedico){
+        return medicoRepository.findById(idMedico)
+                .orElseThrow(()-> new RuntimeException("Medico no encontrado"));
     }
 
-    public MedicoModel save(MedicoModel medico){
+    public MedicoModel guardar(MedicoModel medico){
         return medicoRepository.save(medico);
     }
 
+    public MedicoModel actualizar(Long idMedico, MedicoModel medico){
+
+        MedicoModel existente = medicoRepository.findById(idMedico)
+                .orElseThrow(() -> new RuntimeException("Médico no encontrado"));
+
+        existente.setRutMedico(medico.getRutMedico());
+        existente.setNombreMedico(medico.getNombreMedico());
+        existente.setApellidoMedico(medico.getApellidoMedico());
+        existente.setTelefonoMedico(medico.getTelefonoMedico());
+        existente.setCorreoMedico(medico.getCorreoMedico());
+        existente.setAnniosExperiencia(medico.getAnniosExperiencia());
+        existente.setIdEspecialidad(medico.getIdEspecialidad());
+
+        return medicoRepository.save(medico);
+    }
     public void delete(Long id){
         medicoRepository.deleteById(id);
     }

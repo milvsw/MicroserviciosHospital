@@ -21,19 +21,34 @@ public class ReservasService {
     @Autowired
     private ReservasRepository reservasRepository;
 
-    public List<ReservasModel> findAll(){
+    public List<ReservasModel> listarTodo(){
         return reservasRepository.findAll();
     }
 
-    public ReservasModel findById(Long idReservas){
+    public ReservasModel buscarId(Long idReservas){
         return reservasRepository.findById(idReservas).get();
     }
 
-    public ReservasModel save(ReservasModel reservas){
+    public ReservasModel guardar(ReservasModel reservas){
         return reservasRepository.save(reservas);
     }
 
-    public void delete(Long id){
+    public ReservasModel actualizar(Long id, ReservasModel reservas){
+        ReservasModel existente = reservasRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+
+        existente.setIdPaciente(reservas.getIdPaciente());
+        existente.setIdMedico(reservas.getIdMedico());
+        existente.setIdAgenda(reservas.getIdAgenda());
+        existente.setFechaAtencion(reservas.getFechaAtencion());
+        existente.setMotivoConsulta(reservas.getMotivoConsulta());
+        existente.setEstado(reservas.getEstado());
+        existente.setObservacion(reservas.getObservacion());
+
+        return reservasRepository.save(existente);
+
+    }
+    public void eliminar(Long id){
         reservasRepository.deleteById(id);
     }
 

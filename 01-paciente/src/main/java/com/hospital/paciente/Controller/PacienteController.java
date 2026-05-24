@@ -19,7 +19,7 @@ public class PacienteController {
 
     @GetMapping
     public ResponseEntity<List<PacienteModel>> listar(){
-        List<PacienteModel> pacientes = pacienteService.findAll();
+        List<PacienteModel> pacientes = pacienteService.listarTodos();
         if(pacientes.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -29,7 +29,7 @@ public class PacienteController {
 
     @PostMapping
     public ResponseEntity<PacienteModel> guardar(@Valid @RequestBody PacienteModel paciente){
-        PacienteModel pacientes = pacienteService.save(paciente);
+        PacienteModel pacientes = pacienteService.guardar(paciente);
         return ResponseEntity.status(HttpStatus.CREATED).body(pacientes);
     }
 
@@ -37,7 +37,7 @@ public class PacienteController {
     @GetMapping("/{id}")
     public ResponseEntity<PacienteModel> buscar(@PathVariable Long id){
         try{
-            PacienteModel paciente =  pacienteService.findById(id);
+            PacienteModel paciente =  pacienteService.buscarPorId(id);
             return ResponseEntity.ok(paciente);
         }catch(Exception e){
             return ResponseEntity.notFound().build();
@@ -45,22 +45,10 @@ public class PacienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PacienteModel> actualizar(@PathVariable Long id, @RequestBody PacienteModel paciente){
+    public ResponseEntity<PacienteModel> actualizar(@PathVariable Long id, @Valid @RequestBody PacienteModel paciente){
         try{
-            PacienteModel pacientes = pacienteService.findById(id);
-            pacientes.setIdPaciente(id);
-            pacientes.setRutPaciente(paciente.getRutPaciente());
-            pacientes.setNombrePaciente(paciente.getNombrePaciente());
-            pacientes.setApellidoPaciente(paciente.getApellidoPaciente());
-            pacientes.setFechaNacimiento(paciente.getFechaNacimiento());
-            pacientes.setSexoPaciente(paciente.getSexoPaciente());
-            pacientes.setCorreoPaciente(paciente.getCorreoPaciente());
-            pacientes.setTelefonoPaciente(paciente.getTelefonoPaciente());
-            pacientes.setDireccionPaciente(paciente.getDireccionPaciente());
-
-            pacienteService.save(pacientes);
-            return  ResponseEntity.ok(pacientes);
-
+            PacienteModel pacientes = pacienteService.actualizar(id, paciente);
+            return ResponseEntity.ok(pacientes);
         }catch(Exception e){
             return ResponseEntity.notFound().build();
         }
