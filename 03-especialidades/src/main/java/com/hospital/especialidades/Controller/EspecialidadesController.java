@@ -22,7 +22,7 @@ public class EspecialidadesController {
 
     @GetMapping
     public ResponseEntity<List<EspecialidadesModel>> listar(){
-        List<EspecialidadesModel> especialidad =  especialidadesService.findAll();
+        List<EspecialidadesModel> especialidad =  especialidadesService.listarTodo();
         if(especialidad.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -31,14 +31,14 @@ public class EspecialidadesController {
 
     @PostMapping
     public ResponseEntity<EspecialidadesModel> guardar(@Valid @RequestBody EspecialidadesModel especialidadesModel){
-        EspecialidadesModel  especialidad = especialidadesService.save(especialidadesModel);
+        EspecialidadesModel  especialidad = especialidadesService.guardar(especialidadesModel);
         return ResponseEntity.status(HttpStatus.OK).body(especialidad);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<EspecialidadesModel> buscar(@PathVariable Long id){
         try{
-            EspecialidadesModel especialidad = especialidadesService.findById(id);
+            EspecialidadesModel especialidad = especialidadesService.buscarId(id);
             return ResponseEntity.status(HttpStatus.OK).body(especialidad);
 
         }catch(Exception e){
@@ -47,16 +47,9 @@ public class EspecialidadesController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EspecialidadesModel> actualizar(@PathVariable Long id, @RequestBody EspecialidadesModel especialidadesModel){
+    public ResponseEntity<EspecialidadesModel> actualizar(@PathVariable Long id,@Valid @RequestBody EspecialidadesModel especialidadesModel){
         try{
-            EspecialidadesModel especialidad = especialidadesService.findById(id);
-
-            especialidad.setIdEspecialidad(id);
-            especialidad.setNombreEspecialidad(especialidadesModel.getNombreEspecialidad());
-            especialidad.setDescripcionEspecialidad(especialidadesModel.getDescripcionEspecialidad());
-            especialidad.setAreaMedica(especialidadesModel.getAreaMedica());
-
-            especialidadesService.save(especialidad);
+            EspecialidadesModel especialidad = especialidadesService.actualizar(id, especialidadesModel);
             return  ResponseEntity.status(HttpStatus.OK).body(especialidad);
 
         }catch(Exception e){

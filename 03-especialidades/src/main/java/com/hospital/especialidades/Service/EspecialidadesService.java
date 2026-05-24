@@ -13,16 +13,29 @@ public class EspecialidadesService {
     @Autowired
     private EspecialidadesRepository especialidadesRepository;
 
-    public  List<EspecialidadesModel> findAll(){
+    public  List<EspecialidadesModel> listarTodo(){
         return especialidadesRepository.findAll();
     }
 
-    public EspecialidadesModel findById(Long idEspecialidad){
+    public EspecialidadesModel buscarId(Long idEspecialidad){
         return especialidadesRepository.findById(idEspecialidad).get();
     }
 
-    public EspecialidadesModel save(EspecialidadesModel especialidades){
+    public EspecialidadesModel guardar(EspecialidadesModel especialidades){
         return especialidadesRepository.save(especialidades);
+    }
+
+    public EspecialidadesModel actualizar(Long id, EspecialidadesModel especialidades){
+
+        EspecialidadesModel existente = especialidadesRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Especialidad no encontrada"));
+
+        existente.setNombreEspecialidad(especialidades.getNombreEspecialidad());
+        existente.setDescripcionEspecialidad(especialidades.getDescripcionEspecialidad());
+        existente.setAreaMedica(especialidades.getAreaMedica());
+
+        return  especialidadesRepository.save(existente);
+
     }
 
     public void delete(Long idEspecialidad){

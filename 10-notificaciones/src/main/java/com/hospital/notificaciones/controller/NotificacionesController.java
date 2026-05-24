@@ -55,7 +55,7 @@ public class NotificacionesController {
 
     @GetMapping("/detalle/{id}")
     public Mono<ResponseEntity<NotificacionesDetalleDTO>> detalle(@PathVariable Long id) {
-        return service.obtenerAgendaConMedico(id)
+        return service.obtenerNotificacionConPaciente(id)
                 .map(detalle -> ResponseEntity.status(HttpStatus.OK).body(detalle))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }

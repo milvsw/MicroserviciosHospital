@@ -21,7 +21,7 @@ public class MedicoController {
 
     @GetMapping
     public ResponseEntity<List<MedicoModel>> listar(){
-        List<MedicoModel> medicos = medicoService.findAll();
+        List<MedicoModel> medicos = medicoService.listarTodo();
         if(medicos.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -30,14 +30,14 @@ public class MedicoController {
 
     @PostMapping
     public ResponseEntity<MedicoModel> guardar(@Valid @RequestBody MedicoModel medico){
-        MedicoModel medicos = medicoService.save(medico);
+        MedicoModel medicos = medicoService.guardar(medico);
         return ResponseEntity.status( HttpStatus.CREATED).body(medicos);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<MedicoModel> buscar(@PathVariable Long id){
         try{
-            MedicoModel medico = medicoService.findById(id);
+            MedicoModel medico = medicoService.buscarId(id);
             return ResponseEntity.ok(medico);
 
         }catch(Exception e){
@@ -46,20 +46,9 @@ public class MedicoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MedicoModel> actualizar(@PathVariable Long id, @RequestBody MedicoModel medico){
+    public ResponseEntity<MedicoModel> actualizar(@PathVariable Long id,@Valid @RequestBody MedicoModel medico){
         try{
-            MedicoModel medicos = medicoService.findById(id);
-
-            medicos.setIdMedico(id);
-            medicos.setRutMedico(medico.getRutMedico());
-            medicos.setNombreMedico(medico.getNombreMedico());
-            medicos.setApellidoMedico(medico.getApellidoMedico());
-            medicos.setTelefonoMedico(medico.getTelefonoMedico());
-            medicos.setCorreoMedico(medico.getCorreoMedico());
-            medicos.setAnniosExperiencia(medico.getAnniosExperiencia());
-            medicos.setIdEspecialidad(medico.getIdEspecialidad());
-
-            medicoService.save(medicos);
+            MedicoModel medicos = medicoService.actualizar(id, medico);
             return ResponseEntity.ok(medicos);
 
         }catch(Exception e){
