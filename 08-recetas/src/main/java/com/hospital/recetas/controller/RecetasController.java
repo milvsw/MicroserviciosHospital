@@ -1,5 +1,6 @@
 package com.hospital.recetas.controller;
 
+import com.hospital.recetas.Dto.RecetaConMedicoDTO;
 import com.hospital.recetas.Dto.RecetasDetalleDTO;
 import com.hospital.recetas.model.RecetasModel;
 import com.hospital.recetas.service.RecetasService;
@@ -20,8 +21,8 @@ public class RecetasController {
     private RecetasService service;
 
     @GetMapping
-    public List<RecetasModel> listar() {
-        return service.listarTodas();
+    public List<RecetaConMedicoDTO> listar() {
+        return service.listarTodasConMedico();
     }
 
     @PostMapping

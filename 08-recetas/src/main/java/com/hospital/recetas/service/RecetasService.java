@@ -1,6 +1,7 @@
 package com.hospital.recetas.service;
 import com.hospital.recetas.Dto.MedicoDTO;
 import com.hospital.recetas.Dto.PacienteDTO;
+import com.hospital.recetas.Dto.RecetaConMedicoDTO;
 import com.hospital.recetas.Dto.RecetasDetalleDTO;
 import com.hospital.recetas.Dto.ReservaDTO;
 import com.hospital.recetas.model.RecetasModel;
@@ -21,6 +22,53 @@ public class RecetasService {
 
     public List<RecetasModel> listarTodas() {
         return repo.findAll();
+    }
+
+    public List<RecetaConMedicoDTO> listarTodasConMedico() {
+        List<RecetasModel> recetas = repo.findAll();
+        List<RecetaConMedicoDTO> recetasConMedico = new java.util.ArrayList<>();
+
+        for (RecetasModel receta : recetas) {
+            try {
+                MedicoDTO medico = webClient.get()
+                        .uri(medicoUrl + "/api/v1/medicos/{id}", receta.getIdMedico())
+                        .retrieve()
+                        .bodyToMono(MedicoDTO.class)
+                        .block();
+
+                RecetaConMedicoDTO dto = new RecetaConMedicoDTO(
+                        receta.getId(),
+                        receta.getIdPaciente(),
+                        receta.getIdMedico(),
+                        medico != null ? medico.getNombreMedico() : null,
+                        medico != null ? medico.getApellidoMedico() : null,
+                        receta.getIdReserva(),
+                        receta.getFechaEmision(),
+                        receta.getDiagnostico(),
+                        receta.getMedicamentos(),
+                        receta.getIndicaciones(),
+                        receta.getVigenciaDias()
+                );
+                recetasConMedico.add(dto);
+            } catch (Exception e) {
+                // Si falla la llamada al microservicio de médicos, agregar con nombre null
+                RecetaConMedicoDTO dto = new RecetaConMedicoDTO(
+                        receta.getId(),
+                        receta.getIdPaciente(),
+                        receta.getIdMedico(),
+                        null,
+                        null,
+                        receta.getIdReserva(),
+                        receta.getFechaEmision(),
+                        receta.getDiagnostico(),
+                        receta.getMedicamentos(),
+                        receta.getIndicaciones(),
+                        receta.getVigenciaDias()
+                );
+                recetasConMedico.add(dto);
+            }
+        }
+        return recetasConMedico;
     }
 
     public RecetasModel guardar(RecetasModel receta) {

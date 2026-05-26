@@ -21,7 +21,6 @@ public class ConsultasService {
     public List<ConsultasModel> listarTodos() {
         return repo.findAll(); // [cite: 60]
     }
-
     public ConsultasModel guardar(ConsultasModel box) {
         return repo.save(box);
     }
@@ -49,8 +48,7 @@ public class ConsultasService {
             return repo.save(consultaExistente);
         }).orElseThrow(() -> new RuntimeException("Consulta/Box no encontrado con el ID: " + id));
     }
-
-
+    
     private final WebClient webClient;
 
     @Value("${servicio.paciente.url}")
