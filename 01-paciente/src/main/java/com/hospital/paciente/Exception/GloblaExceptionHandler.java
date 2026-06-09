@@ -1,37 +1,84 @@
 package com.hospital.paciente.Exception;
-
+import com.hospital.paciente.Service.PacienteService;
+import com.hospital.paciente.DTO.ErrorResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
+
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-@ControllerAdvice
+import java.util.stream.Collectors;
+
+@RestControllerAdvice
 public class GloblaExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleValidationException(MethodArgumentNotValidException ex) {
-        Map<String, Object> response = new HashMap<>();
-        Map<String, String> errors = new HashMap<>();
+    private static final Logger log =
+            LoggerFactory.getLogger(PacienteService.class);
+    // ... handlers
 
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fielName = ((FieldError)error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fielName, errorMessage);
-        });
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNoResourceFound(NoResourceFoundException ex,
+                                                               HttpServletRequest request) {
+        HttpStatus status = HttpStatus.NOT_FOUND; // Código HTTP 404
 
-        response.put("timestamp", LocalDateTime.now());
-        response.put("status", HttpStatus.BAD_REQUEST.value());
-        response.put("error", "Error de validacion");
-        response.put("message", errors);
+        // Registramos la advertencia estructurada para Grafana Loki
+        log.warn("Ruta o recurso estático no encontrado");
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        // Construimos la respuesta homogénea para el cliente
+        ErrorResponse error = new ErrorResponse();
+        error.setMensaje("Ruta no encontrada");
+        error.setDetalle("El endpoint '" + request.getRequestURI() + "' no existe en este servidor o el recurso estático no fue encontrado.");
+        error.setStatus(status.value()); // 404
+        error.setTimeStamp(LocalDateTime.now());
+        return ResponseEntity.status(status).body(error);
+
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidation(
+            MethodArgumentNotValidException ex) {
+        String detalle = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(err -> err.getField() + ":" + err.getDefaultMessage())
+                .collect(Collectors.joining(","));
+        // Registramos la advertencia de validación en logs
+        log.warn("Fallo de validación en tiempo de persistencia");
+        ErrorResponse error = new ErrorResponse();
+        error.setMensaje("Errores de validacion");
+        error.setDetalle(detalle);
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setTimeStamp(LocalDateTime.now());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(error);
+
+
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleGeneric(
+            Exception ex, HttpServletRequest request) {
+        log.warn("Fallo Generico en la aplicacion");
+        ErrorResponse error = new ErrorResponse();
+        error.setMensaje("Errores interno del servidor");
+        error.setDetalle(ex.getMessage());
+        error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        error.setTimeStamp(LocalDateTime.now());
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(error);
+
+    }
+
 
 
 }
